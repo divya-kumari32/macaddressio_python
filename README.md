@@ -1,5 +1,5 @@
 # MAC Address Vendor lookup CLI
-A simple short script to query https://api.macaddress.io/
+A simple script to query https://api.macaddress.io/
 
 ## Getting Started
 This scripting utility has be written using the standard library included in python 3.x All you need to get started is sign up for an account [here](https://macaddress.io/signup) and obtain your API key.
