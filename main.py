@@ -21,7 +21,8 @@ def confirm_macaddr(macaddress):
     return re.match("^([0-9A-Fa-f]{2}[:.-]?){5}([0-9A-Fa-f]{2})$", macaddress.strip())
 
 def buildrequest(macaddress, api_key):
-
+    
+   #build request to be sent with the mac address and the api key provided in the command line or in the dockerfile(only api_key as environment variable) 
     requrl = "https://api.macaddress.io/v1"                                      
     auth_header = {"X-Authentication-Token": api_key}                            
     queryparams = {"output": "json","search": macaddress}                        
@@ -31,6 +32,7 @@ def buildrequest(macaddress, api_key):
 
 def sendrequest(req):
 
+    #receives response and decodes it according to character set
     try:
         res = urllib.request.urlopen(req)       
         output = res.read().decode("utf-8")     
@@ -55,6 +57,7 @@ def recursive_key(res_arr):
 
 def match_param(res_arr, query_val):
 
+    #function to match the queries/parameters
     param_list = []
 
     for key in recursive_key(res_arr):
@@ -68,6 +71,7 @@ def match_param(res_arr, query_val):
 
 
 def recursive_val(param, res_arr):
+    
     if param in res_arr:
         return res_arr[param]
     for val in res_arr.values():
@@ -80,6 +84,7 @@ def recursive_val(param, res_arr):
 
 def formatted_Output(response, queries, output_type):
 
+    #formats the output according to output parameter provided. Minimal by default.
     output_array = {}
     output_str = ""
 
@@ -115,6 +120,8 @@ def formatted_Output(response, queries, output_type):
 
 
 def main():
+    
+    #main function
 
     parser = argparse.ArgumentParser( description = "Simple python script to query macaddress.io and fetch details of the respective Vendor")
 
