@@ -43,40 +43,6 @@ def sendrequest(req):
     finally:
         res.close()
 
-def recursive_key(res_arr):
-    
-    for key, value in res_arr.items():
-        if type(value) is dict:
-            yield (key)
-            yield from recursive_key(value)
-        else:
-            yield (key)
-
-
-def match_param(res_arr, query_val):
-
-    param_list = []
-
-    for key in recursive_key(res_arr):
-        param_list.append(key)
-
-    for key in param_list:
-        if query_val.lower() in key.lower():
-            return key
-
-    return None
-
-
-def recursive_val(param, res_arr):
-    if param in res_arr:
-        return res_arr[param]
-    for val in res_arr.values():
-        if isinstance(val, dict):
-            nested_val = recursive_val(param, val)
-            if nested_val is not None:
-                return nested_val
-    return None
-
 
 def formatted_Output(response, queries, output_type):
 
