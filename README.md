@@ -84,6 +84,6 @@ docker run --env macaddrio_api_key=at_2JZmaU1wWAO6U1Ro5jDITfsyuMuDK macaddressio
 
 While the docker image build process does have an optional argument to take the `macaddrio_api_key` key with the build process, it is not a good idea to use it non-local environments. This is only meant for image build on your local machine.
 
-Also, relying on MAC address vendor information to detect anomalous devices in your network by itself isn't a complete security guarantee. An attacker can easily alter the MAC address of their machine to match the trusted MAC address value. Security features like DHCP Snooping can be used to reduce attacka like MitM(Man in the Middle), etc. 
+Relying on MAC address vendor information to detect atypical devices in your network by itself isn't a complete security guarantee. An attacker can easily change the MAC address of their machine to match the trusted MAC address value. Security features like DHCP Snooping can be used to reduce attacka like MitM(Man in the Middle), etc. 
 
 
