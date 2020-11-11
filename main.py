@@ -43,71 +43,66 @@ def sendrequest(req):
     finally:
         res.close()
 
-def recursive_param_lookup(res_arr):
+def recursive_key(res_arr):
     
-    for param, value in res_arr.items():
+    for key, value in res_arr.items():
         if type(value) is dict:
-            yield(param)
-            yield from recursive_param_lookup(value)
+            yield (key)
+            yield from recursive_key(value)
         else:
-            yield(param)
+            yield (key)
 
 
-def match_param(res_arr,query):
+def match_param(res_arr, query_val):
 
     param_list = []
 
-    for param in recursive_param_lookup(res_arr):
-        param_list.append(param)
-    
-    for param in param_list:
-        if query.lower() in param.lower():
-            return param
-    
+    for key in recursive_key(res_arr):
+        param_list.append(key)
+
+    for key in param_list:
+        if query_val.lower() in key.lower():
+            return key
+
     return None
 
-def recursive_mac_lookup(param,res_arr):
-    
+
+def recursive_val(param, res_arr):
     if param in res_arr:
         return res_arr[param]
-    
     for val in res_arr.values():
         if isinstance(val, dict):
-            nested_val = recursive_mac_lookup(param,val)
+            nested_val = recursive_val(param, val)
             if nested_val is not None:
                 return nested_val
-    
     return None
 
 
-def formatted_Output(response,queries,output_type):
+def formatted_Output(response, queries, output_type):
 
-    output_array = {} 
+    output_array = {}
     output_str = ""
+
     try:
         response_array = json.loads(response)
         for query in queries:
-            for key in response_array.keys():
-                if response_array[key].get(query):
-                    output_array[query] = response_array[key].get(query)
-                
-            # search_param = match_param(response_array,query)
-            # if search_param is not None:
-            #     search_val = recursive_mac_lookup(search_param,response_array)
-            #     output_array[query] = search_param
-            # else:
-            #     output_array[query] = None
-    
+            search_param = match_param(response_array, query)
+            if search_param is not None:
+                search_val = recursive_val(search_param, response_array)
+                output_array[query] = search_val
+            else:
+                output_array[query] = None
+
     except ValueError as e:
-        logging.error("Error in JSON Output")
+        logging.error("Could not load JSON output to string.")
 
     if output_type == "json":
         output_str = json.dumps(output_array)
     elif output_type == "csv":
         output_str = (
             ",".join(output_array.keys())
-            +"\n"
-            +",".join('"{0}"'.format(val) for val in output_array.values())
+            + "\n"
+            + ",".join('"{0}"'.format(val) for val in output_array.values())
         )
     else:
         if len(output_array) == 1:
@@ -116,7 +111,6 @@ def formatted_Output(response,queries,output_type):
             output_str = "\n".join(
                 "{!s}={!s}".format(key, val) for (key, val) in output_array.items()
             )
-
     return output_str
 
 
