@@ -71,7 +71,7 @@ name,valid
 
 For your convenience a Dockerfile has also been provided along with the code.
 
- docker run --env macaddrio_api_key=<your_api_key> <image_name> <MAC_ADDRESS> <OPTIONAL_PARAMS>
+ docker run --env macaddrio_api_key=<your_api_key> <image_name> <MAC_ADDRESS>
 
 Either build it yourself or you can use the one below:
 
