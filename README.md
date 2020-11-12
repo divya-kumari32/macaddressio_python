@@ -81,7 +81,7 @@ Example:
 docker run --env macaddrio_api_key=at_2JZmaU1wWAO6U1Ro5jDITfsyuMuDK macaddressio E8-40-40-79-C8-60
 ```
 
-Incase of any error with docker run command, please do an image build.
+Incase of any error with docker run command, please do a docker build.
 ## Security
 
 While the docker image build process does have an optional argument to take the `macaddrio_api_key` key with the build process, it is not a good idea to use it non-local environments. This is only meant for image build on your local machine.
